@@ -49,7 +49,8 @@ const login = async (req, res) => {
     //check wheather the password is matching or not
     const isMatch = await bcrypt.compare(password, user.password);
 
-    if (isMatch) {
+    console.log(user.verified);
+    if (isMatch && user.verified) {
       const token = generateToken({ id: user._id.toString() }, "7d");
 
       //display the user details

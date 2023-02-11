@@ -15,7 +15,6 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.get("remember") ? true : false);
     const user = {
       name: data.get("name"),
       email: data.get("email"),
@@ -23,7 +22,6 @@ export default function SignUp() {
       district: data.get("district"),
       state: data.get("state"),
       password: data.get("password"),
-      saveuser: data.get("remember") ? true : false,
     };
     try {
       // const response = await axios.post(

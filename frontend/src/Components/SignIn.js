@@ -9,19 +9,34 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 
-const theme = createTheme();
-
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const user = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    try {
+      // const response = await axios.post(
+      //   "http://localhost:7000/user/signup",
+      //   user
+      // );
+      // const userdata = response.data;
+      const response = await fetch("http://localhost:7000/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const userdata = await response.json();
+      console.log("userdata", userdata);
+    } catch (error) {
+      console.log("error during signing in", error);
+    }
   };
 
   return (

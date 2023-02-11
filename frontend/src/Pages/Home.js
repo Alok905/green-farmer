@@ -24,6 +24,14 @@ const Home = () => {
           </p>
         </div>
       </div>
+      <div className="chat_logo">
+        <a href="https://chat-web-app-a8c4f.web.app/signin" target="blank">
+          <img
+            src="https://as2.ftcdn.net/v2/jpg/05/11/87/37/1000_F_511873784_NLmIMOcuwo9JTuoXJNyR0jQSQOUXUvFk.jpg"
+            alt=""
+          />
+        </a>
+      </div>
     </div>
   );
 };
