@@ -11,7 +11,7 @@ const MAILING_SECRET = "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";
 const MAILING_ACCESS =
   "ya29.a0AVvZVso-d0eLBwRMA7jrv0quP2GKqVKbrBMoKzSITsuQLYyryPOq9xrevQqRuO5B3MO-UN_Hip6vrnLXnBQkf3eXVBDl2PuMcP3Iq2porhFDXCN4oSYjdB2qm3MbcttNBsUHao06wXmfFzshB1qpDpya0b5DaCgYKAS8SARASFQGbdwaIC9CRNUjRhJXcne0fbHh78w0163";
 const MAILING_REFRESH =
-  "1//04I2s_lMMN4JECgYIARAAGAQSNwF-L9IrKTJDt8wCLmWDb6cgS8ZbAjX_wGa4tKYDL8sLMREuGw1wqUsGp38rvkcO621WrQiqC50";
+  "1//04hzmSoedHZv1CgYIARAAGAQSNwF-L9Ir8beOhHg_494QtqtGGCilTj54vegY2aau89RTB8i4mJv99K2bxZLPom_a9_P1qUToBx8";
 //--------------
 
 const oauth_link = "https://developers.google.com/oauthplayground";
@@ -25,7 +25,6 @@ const auth2client = new OAuth2(
 );
 
 exports.sendVerificationEmail = async (email, name, url) => {
-  console.log(name, email);
   //if the access token is expired then it'll regenerate the access token
   auth2client.setCredentials({
     refresh_token: MAILING_REFRESH,

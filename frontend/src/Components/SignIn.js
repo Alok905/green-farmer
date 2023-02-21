@@ -3,15 +3,20 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
+import { NavContext } from "../misc/context";
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
+  const { navLinks, setNavLinks } = React.useContext(NavContext);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -33,7 +38,20 @@ export default function SignIn() {
         body: JSON.stringify(user),
       });
       const userdata = await response.json();
-      console.log("userdata", userdata);
+
+      console.log(userdata);
+
+      userdata.user.name &&
+        localStorage.setItem("USER", JSON.stringify(userdata));
+
+      userdata.user.name &&
+        setNavLinks(() => {
+          const newLinks = navLinks.filter((item) => item.to !== "/account");
+          newLinks.push({ to: "/profile", text: "Profile" });
+          return newLinks;
+        });
+
+      navigate("/");
     } catch (error) {
       console.log("error during signing in", error);
     }

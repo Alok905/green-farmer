@@ -14,17 +14,31 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    town: {
-      type: String,
-      required: true,
-    },
-    district: {
-      type: String,
-      required: true,
-    },
-    state: {
-      type: String,
-      required: true,
+    location: {
+      country: {
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+      district: {
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
+      longitude: {
+        type: Number,
+        required: true,
+      },
     },
     password: {
       type: String,

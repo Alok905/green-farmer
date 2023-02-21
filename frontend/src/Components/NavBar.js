@@ -1,22 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { NavContext } from "../misc/context";
 
-const NavBar = ({ currentLoc }) => {
-  const LINKS = [
-    { to: "/", text: "Home" },
-    { to: "/about", text: "About" },
-    { to: "/contact", text: "Contact" },
-    { to: "/service", text: "Service" },
-    { to: "/account", text: "Account" },
-  ];
+const NavBar = ({ currentPath }) => {
+  const { navLinks } = useContext(NavContext);
 
   return (
     <div className="nav_container">
-      {/* <div className="nav_menu"> */}
       <ul>
-        {LINKS.map(
+        {navLinks.map(
           (item) =>
-            !(item.text === "Home" && currentLoc === "/") && (
+            !(item.to === currentPath) && (
               <li key={item.to} className="nav_menu_item">
                 <Link to={item.to}>{item.text}</Link>
               </li>

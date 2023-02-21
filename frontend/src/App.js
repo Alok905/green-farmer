@@ -8,26 +8,46 @@ import Service from "./Pages/Service";
 import NavBar from "./Components/NavBar";
 import logo from "./Images/logo-removebg-preview.png";
 import Account from "./Pages/Account";
+import { NavContext } from "./misc/context";
 
 const App = () => {
-  const location = useLocation();
-  const [currentLoc, setCurrentLoc] = useState("");
+  const routePath = useLocation();
+  const [currentPath, setCurrentPath] = useState("");
+  const [userLocation, setUserLocation] = useState(null);
   useEffect(() => {
-    setCurrentLoc(location.pathname);
-  }, [location]);
+    setCurrentPath(routePath.pathname);
+  }, [routePath]);
+
+  const userData = JSON.parse(localStorage.getItem("USER"));
+  const lastEntry = userData
+    ? { to: "/profile", text: "Profile" }
+    : { to: "/account", text: "Account" };
+
+  const [navLinks, setNavLinks] = useState([
+    { to: "/", text: "Home" },
+    { to: "/about", text: "About" },
+    { to: "/contact", text: "Contact" },
+    { to: "/service", text: "Service" },
+    { ...lastEntry },
+  ]);
+
   return (
     <>
-      <div className="main_logo">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
-      <NavBar currentLoc={currentLoc} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/service" element={<Service />} />
-        <Route path="/account/*" element={<Account />} />
-      </Routes>
+      <NavContext.Provider
+        value={{ navLinks, setNavLinks, userLocation, setUserLocation }}
+      >
+        <div className="main_logo">
+          <img className="logo" src={logo} alt="logo" />
+        </div>
+        <NavBar currentPath={currentPath} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/account/*" element={<Account />} />
+        </Routes>
+      </NavContext.Provider>
     </>
   );
 };

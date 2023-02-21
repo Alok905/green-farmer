@@ -6,16 +6,15 @@ const { sendVerificationEmail } = require("../helpers/mailer");
 const { validateEmail } = require("../helpers/validation");
 
 const signup = async (req, res) => {
-  let { name, email, town, district, state, password } = req.body;
+  let { name, email, location, password } = req.body;
+  console.log(req.body);
   try {
     //encrypt the password
     password = await bcrypt.hash(password, 10);
     const user = await User({
       name,
       email,
-      town,
-      district,
-      state,
+      location,
       password,
     });
     if (!validateEmail(email)) {
@@ -36,6 +35,7 @@ const signup = async (req, res) => {
     //display the user details
     res.status(200).json({ user, token });
   } catch (err) {
+    console.log(err);
     res.status(400).json(err.message);
   }
 };
@@ -49,8 +49,7 @@ const login = async (req, res) => {
     //check wheather the password is matching or not
     const isMatch = await bcrypt.compare(password, user.password);
 
-    console.log(user.verified);
-    if (isMatch && user.verified) {
+    if (isMatch) {
       const token = generateToken({ id: user._id.toString() }, "7d");
 
       //display the user details
